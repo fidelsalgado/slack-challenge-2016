@@ -1,4 +1,5 @@
 'use strict'; 
+const SLACK_TOKEN = 'rFfHJmoHxZSaPi302yac7yOM';
 const express = require('express'); 
 const bodyParser = require('body-parser'); 
 const app = express(); 
@@ -8,10 +9,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', (process.env.PORT || 5000));
 
 app.post('/', (req, res) => { 
-  let text = req.body.text; 
-  console.log(text);
-  res.json({'cool': 'dope'});
-      // implement your bot here ... 
+  let move = req.body.text; 
+
+  // TODO: do some user input validation 
+ 
+  console.log(move);
+
+  res.json({
+    response_type: 'in_channel',
+    text: move
+  });
 });
 
 app.all('/', (req, res) => { 
