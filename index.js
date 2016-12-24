@@ -20,14 +20,14 @@ app.post('/', (req, res) => {
   let token = req.body.token;
   let team = req.body.team_id;
   if(token !== SLACK_TOKEN || team !== TEAM_ID) {
-    res.status(403).send();
+    return res.status(403).send();
   }
 
   let text = req.body.text;
   let username = req.body.user_name;
   let channel = req.body.channel_id;
   if(!text || !username || !channel) {
-    res.status(400).send();
+    return res.status(400).send();
   }
 
   if(!(channel in gamesOn)) {
