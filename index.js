@@ -26,7 +26,7 @@ app.post('/', (req, res) => {
   let text = req.body.text;
   let username = req.body.user_name;
   let channel = req.body.channel_id;
-  if(!text || !username || !channel) {
+  if(!username || !channel) {
     return res.status(400).send();
   }
 
