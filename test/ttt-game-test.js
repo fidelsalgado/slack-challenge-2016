@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var game = require('../lib/ttt-game.js')();
 var errorMessages = require('../lib/error-messages.js');
@@ -29,7 +31,7 @@ describe('TicTacToe Game', () => {
       game.handleUserInput('(1,1)', 'myUser');
       game.handleUserInput('(2,2)', 'otherUser');
       let response = game.handleUserInput('(2,0)', 'myUser');
-      assert(response.text.startsWith('We have a winner! @myUser.'));
+      assert(response.text.startsWith('We have a winner! Congratulations @myUser.'));
     });
 
     it('no username for new game', () => {
@@ -42,7 +44,7 @@ describe('TicTacToe Game', () => {
       response = game.handleUserInput('@otherUser', 'myUser');
 
       let coords = ['0,2', '(0,2', '0,2)'];
-      for(c of coords) {
+      for(let c of coords) {
         response = game.handleUserInput(c, 'myUser');
         assert.equal(response.text, errorMessages.coordinatesFormat);
       }
@@ -50,14 +52,14 @@ describe('TicTacToe Game', () => {
 
     it('coordinates not a number', () => {
       let coords = ['(x,2)', '(y,4)', '(z,y)'];
-      for (c of coords) 
+      for (let c of coords) 
         assert.equal(game.handleUserInput(c, 'myUser').text, 
                      errorMessages.coordinatesNaN);
     });
 
     it('coordinates not a valid move', () => {
       let coords = ['(-1,0)', '(3,0)', '(0,3)', '(3,3)'];
-      for (c of coords)
+      for (let c of coords)
         assert.equal(game.handleUserInput(c, 'myUser').text,
                      errorMessages.notValidMove);
     });
