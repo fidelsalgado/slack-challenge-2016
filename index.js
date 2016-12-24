@@ -1,6 +1,6 @@
 'use strict'; 
 const SLACK_TOKEN = 'rFfHJmoHxZSaPi302yac7yOM';
-const TEAM_ID = '';
+const TEAM_ID = 'T3F7VCUQ1';
 const tttGame = require('./lib/ttt-game.js');
 const slackInputParser = require('./lib/slack-input-parser');
 let gamesOn = {};
@@ -19,8 +19,7 @@ app.post('/', (req, res) => {
 
   let token = req.body.token;
   let team = req.body.team_id;
-  console.log(team);
-  if(token !== SLACK_TOKEN) {
+  if(token !== SLACK_TOKEN || team !== TEAM_ID) {
     res.status(403).send();
   }
 
