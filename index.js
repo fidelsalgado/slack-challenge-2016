@@ -1,5 +1,6 @@
 'use strict'; 
 const SLACK_TOKEN = 'rFfHJmoHxZSaPi302yac7yOM';
+const TEAM_ID = '';
 const tttGame = require('./lib/ttt-game.js');
 const slackInputParser = require('./lib/slack-input-parser');
 let gamesOn = {};
@@ -16,9 +17,19 @@ app.post('/', (req, res) => {
   // TODO: Check that token and team is valid
   // TODO: Check if body is valid
 
+  let token = req.body.token;
+  let team = req.body.team_id;
+  console.log(team);
+  if(token !== SLACK_TOKEN) {
+    res.status(403).send();
+  }
+
   let text = req.body.text;
   let username = req.body.user_name;
   let channel = req.body.channel_id;
+  if(!text || !username || !channel) {
+    res.status(400).send();
+  }
 
   if(!(channel in gamesOn)) {
     gamesOn[channel] = tttGame();
@@ -28,7 +39,6 @@ app.post('/', (req, res) => {
 });
 
 app.all('/', (req, res) => { 
-  // TODO: Better handling
   res.status(404).send('Not found');
 });
 
